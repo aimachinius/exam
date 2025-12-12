@@ -78,13 +78,6 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-icon">📊</div>
-                        <h3>Xem Kết Quả</h3>
-                        <p>Xem điểm số và kết quả của học sinh</p>
-                        <button class="card-btn">Xem Chi Tiết</button>
-                    </div>
-
-                    <div class="card">
                         <div class="card-icon">👥</div>
                         <h3>Quản Lý Người Dùng</h3>
                         <p>Tạo tài khoản giáo viên và học sinh mới</p>

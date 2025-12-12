@@ -1,74 +1,73 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <%@ page session="true" %>
-        <% String username=(String) session.getAttribute("username"); String role=(String) session.getAttribute("role");
-            String fullname=(String) session.getAttribute("fullname"); if (username==null || !role.equals("STUDENT")) {
-            response.sendRedirect("login.jsp"); return; } %>
-            <!DOCTYPE html>
-            <html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="true" %>
+<% 
+    String username = (String) session.getAttribute("username"); 
+    String role = (String) session.getAttribute("role"); 
+    String fullname = (String) session.getAttribute("fullname"); 
+    if (username == null || role == null || !role.equals("STUDENT")) { 
+        response.sendRedirect("login.jsp"); 
+        return; 
+    } 
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Sinh Viên</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/student-dashboard.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">
+            <div class="logo">📚</div>
+            <h1>Hệ Thống Thi Trắc Nghiệm</h1>
+        </div>
+        <div class="navbar-right">
+            <div class="user-info">
+                <div class="user-avatar"><%= username.charAt(0) %></div>
+                <div class="user-details">
+                    <div class="user-name"><%= fullname %></div>
+                    <div class="user-role">Sinh Viên</div>
+                </div>
+            </div>
+            <a href="logout" class="logout-btn">Đăng Xuất</a>
+        </div>
+    </div>
 
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Dashboard Học Sinh</title>
-                <link rel="stylesheet" href="css/student-dashboard.css">
-            </head>
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="welcome-section">
+                <h2>Chào mừng, <%= fullname %>! 👋</h2>
+                <p>Đây là dashboard của bạn. Bạn có thể xem danh sách các cuộc thi sẵn sàng để tham gia và bắt đầu thi ngay. Chúc bạn làm bài tốt và đạt kết quả cao!</p>
+                <div class="info-box">
+                    <span class="icon">💡</span>
+                    <span>Mỗi sinh viên chỉ được thi 1 lần cho mỗi bài thi. Hãy chuẩn bị kỹ trước khi bắt đầu!</span>
+                </div>
+            </div>
 
-            <body>
-                <div class="navbar">
-                    <h1>📚 Hệ Thống Thi Trắc Nghiệm</h1>
-                    <div class="navbar-right">
-                        <div class="user-info">
-                            <div class="user-avatar">
-                                <%= username.charAt(0) %>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600;">
-                                    <%= fullname %>
-                                </div>
-                                <div style="font-size: 12px; opacity: 0.8;">Học Sinh</div>
-                            </div>
-                        </div>
-                        <a href="logout" class="logout-btn">Đăng Xuất</a>
-                    </div>
+            <div class="dashboard-grid">
+                <div class="card" onclick="window.location.href='<%= request.getContextPath() %>/student?action=list'">
+                    <div class="card-icon">📝</div>
+                    <h3>Danh Sách Cuộc Thi</h3>
+                    <p>Xem các cuộc thi sẵn sàng để tham gia và lựa chọn bài thi phù hợp với bạn</p>
+                    <button class="card-btn">Xem Danh Sách</button>
                 </div>
 
-                <div class="container">
-                    <div class="welcome-section">
-                        <h2>Chào mừng, <%= fullname %>! 👋</h2>
-                        <p>Đây là dashboard dành cho học sinh. Bạn có thể làm bài thi, xem kết quả và lịch sử thi cử.
-                        </p>
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <div class="card-icon">📋</div>
-                            <h3>Làm Bài Thi</h3>
-                            <p>Tham gia làm bài thi trắc nghiệm mới</p>
-                            <button class="card-btn">Tham Gia</button>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-icon">📊</div>
-                            <h3>Xem Kết Quả</h3>
-                            <p>Xem kết quả bài thi đã hoàn thành</p>
-                            <button class="card-btn">Xem Chi Tiết</button>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-icon">📜</div>
-                            <h3>Lịch Sử Thi</h3>
-                            <p>Xem tất cả lịch sử tham gia bài thi</p>
-                            <button class="card-btn">Lịch Sử</button>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-icon">⚙️</div>
-                            <h3>Cài Đặt</h3>
-                            <p>Quản lý thông tin cá nhân của bạn</p>
-                            <button class="card-btn">Cài Đặt</button>
-                        </div>
-                    </div>
+                <div class="card" onclick="window.location.href='<%= request.getContextPath() %>/student?action=results'">
+                    <div class="card-icon">📊</div>
+                    <h3>Kết Quả Thi</h3>
+                    <p>Xem điểm số và kết quả chi tiết các bài thi đã hoàn thành của bạn</p>
+                    <button class="card-btn">Xem Kết Quả</button>
                 </div>
-            </body>
 
-            </html>
+                <div class="card" onclick="window.location.href='<%= request.getContextPath() %>/student?action=guide'">
+                    <div class="card-icon">❓</div>
+                    <h3>Hướng Dẫn</h3>
+                    <p>Hướng dẫn chi tiết về cách sử dụng hệ thống thi trắc nghiệm một cách hiệu quả</p>
+                    <button class="card-btn">Xem Hướng Dẫn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

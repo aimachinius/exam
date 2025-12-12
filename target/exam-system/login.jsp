@@ -130,11 +130,11 @@
                 </div>
                 <% } %>
 
-                    <div class="login-info">
+                    <!-- <div class="login-info">
                         <strong>Tài khoản mặc định:</strong><br>
                         Username: admin<br>
                         Password: admin123
-                    </div>
+                    </div> -->
 
                     <form action="login" method="POST">
                         <div class="form-group">

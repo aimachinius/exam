@@ -1,0 +1,86 @@
+/* Manage Test Specific Styles */
+.tests-list {
+    display: grid;
+    gap: 20px;
+}
+
+.test-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 25px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.test-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+}
+
+.test-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(30, 60, 114, 0.15);
+    border-color: #1e3c72;
+}
+
+.test-card:hover::before {
+    transform: scaleY(1);
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.test-info {
+    flex: 1;
+}
+
+.test-name {
+    color: #1e3c72;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.test-meta {
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.test-time {
+    margin: 5px 0;
+}
+
+.test-actions {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .test-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .test-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .test-actions .btn-small {
+        width: 100%;
+    }
+}

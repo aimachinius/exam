@@ -6,50 +6,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hướng Dẫn Sử Dụng</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .navbar h1 { color: #333; font-size: 24px; }
-        .navbar-right { display: flex; align-items: center; gap: 30px; }
-        .user-info { display: flex; align-items: center; gap: 10px; }
-        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .logout-btn { background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; text-decoration: none; transition: background 0.3s; }
-        .logout-btn:hover { background: #c0392b; }
-        .container { display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; flex: 1; }
-        .content { background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); padding: 40px; width: 100%; max-width: 1000px; max-height: 85vh; overflow-y: auto; }
-        h2 { color: #333; margin-bottom: 30px; font-size: 28px; }
-        .guide-section { margin-bottom: 35px; }
-        .guide-section h3 { color: #667eea; font-size: 20px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .guide-section p { color: #666; line-height: 1.8; margin: 10px 0; font-size: 15px; }
-        .guide-section ul { color: #666; margin-left: 25px; margin: 15px 0; }
-        .guide-section li { margin: 8px 0; line-height: 1.6; }
-        .guide-section strong { color: #333; }
-        .note-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 4px; margin: 15px 0; font-size: 14px; color: #856404; }
-        .warning-box { background: #f8d7da; border-left: 4px solid #e74c3c; padding: 15px; border-radius: 4px; margin: 15px 0; font-size: 14px; color: #721c24; }
-        .info-box { background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 15px; border-radius: 4px; margin: 15px 0; font-size: 14px; color: #0c5460; }
-        .actions { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; }
-        .btn { padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s; }
-        .btn-back { background: #95a5a6; color: white; }
-        .btn-back:hover { background: #7f8c8d; }
-        .btn-dashboard { background: #667eea; color: white; }
-        .btn-dashboard:hover { background: #5568d3; }
-        .step-number { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: #667eea; color: white; border-radius: 50%; font-weight: bold; margin-right: 10px; }
-    </style>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/guide.css">
 </head>
 <body>
     <div class="navbar">
-        <h1>📚 Hệ Thống Thi Trắc Nghiệm</h1>
+        <div class="navbar-brand">
+            <div class="logo">📚</div>
+            <h1>Hệ Thống Thi Trắc Nghiệm</h1>
+        </div>
         <div class="navbar-right">
+            <a href="<%= request.getContextPath() %>/student-dashboard.jsp" class="home-btn">🏠 Trang chủ</a>
             <div class="user-info">
                 <div class="user-avatar"><%= username.charAt(0) %></div>
-                <div>
-                    <div style="font-weight: 600;"><%= fullname %></div>
-                    <div style="font-size: 12px; opacity: 0.8;">Sinh Viên</div>
+                <div class="user-details">
+                    <div class="user-name"><%= fullname %></div>
+                    <div class="user-role">Sinh Viên</div>
                 </div>
             </div>
-            <a href="student-dashboard.jsp" class="logout-btn">← Dashboard</a>
-            <a href="logout" class="logout-btn">Đăng Xuất</a>
+            <a href="../logout" class="logout-btn">Đăng Xuất</a>
         </div>
     </div>
     
@@ -66,7 +40,7 @@
                     <li><strong>Hướng Dẫn:</strong> Trang này để giúp bạn hiểu cách sử dụng hệ thống</li>
                 </ul>
                 <div class="info-box">
-                    💡 <strong>Mẹo:</strong> Bạn có thể quay lại trang chủ bất kỳ lúc nào bằng cách click nút "← Dashboard"
+                    💡 <strong>Mẹo:</strong> Bạn có thể quay lại trang chủ bất kỳ lúc nào bằng cách click nút "→ Trang chủ"
                 </div>
             </div>
 
@@ -186,11 +160,6 @@
 
             <div class="note-box">
                 📌 <strong>Ghi Chú Cuối Cùng:</strong> Nếu bạn gặp vấn đề kỹ thuật hoặc có câu hỏi không được giải đáp ở đây, vui lòng liên hệ với quản trị viên hoặc giảng viên của bạn.
-            </div>
-
-            <div class="actions">
-                <a href="<%= request.getContextPath() %>/student?action=list" class="btn btn-back">← Danh Sách Thi</a>
-                <a href="student-dashboard.jsp" class="btn btn-dashboard">→ Dashboard</a>
             </div>
         </div>
     </div>
