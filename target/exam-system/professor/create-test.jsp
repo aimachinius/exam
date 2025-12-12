@@ -16,14 +16,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tạo Cuộc Thi</title>
-    <style> /* minimal styling similar to other pages */
-        body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,#667eea,#764ba2);}
-        .container{max-width:1000px;margin:30px auto;background:white;padding:24px;border-radius:8px}
-        .section{margin-bottom:20px}
-        table{width:100%;border-collapse:collapse}
-        th,td{padding:8px;border:1px solid #eee}
-    </style>
+    <title>Tạo Cuộc Thi - Hệ Thống Thi Trắc Nghiệm</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/professor-common.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/create-test.css">
     <script>
         function filterByClass() {
             var v = document.getElementById('classFilter').value.toLowerCase();
@@ -33,16 +28,89 @@
                 if (!v || cls.toLowerCase().indexOf(v) !== -1) r.style.display=''; else r.style.display='none';
             });
         }
+        
+        // Set minimum datetime for start time (current datetime)
+        window.addEventListener('DOMContentLoaded', function() {
+            var now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            var minDateTime = now.toISOString().slice(0, 16);
+            
+            var startInput = document.querySelector('input[name="startTime"]');
+            var endInput = document.querySelector('input[name="endTime"]');
+            
+            startInput.min = minDateTime;
+            
+            // When start time changes, update end time minimum
+            startInput.addEventListener('change', function() {
+                endInput.min = this.value;
+                if (endInput.value && endInput.value <= this.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    endInput.value = '';
+                }
+            });
+            
+            // Validate end time
+            endInput.addEventListener('change', function() {
+                if (startInput.value && this.value <= startInput.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    this.value = '';
+                }
+            });
+        });
+        
+        function validateForm() {
+            var startTime = document.querySelector('input[name="startTime"]').value;
+            var endTime = document.querySelector('input[name="endTime"]').value;
+            var now = new Date();
+            
+            if (!startTime || !endTime) {
+                alert('Vui lòng nhập đầy đủ thời gian bắt đầu và kết thúc!');
+                return false;
+            }
+            
+            var start = new Date(startTime);
+            var end = new Date(endTime);
+            
+            if (start <= now) {
+                alert('Thời gian bắt đầu phải sau thời điểm hiện tại!');
+                return false;
+            }
+            
+            if (end <= start) {
+                alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                return false;
+            }
+            
+            return true;
+        }
     </script>
 </head>
 <body>
+    <div class="navbar">
+        <div class="navbar-brand">
+            <div class="logo">📚</div>
+            <h1>Hệ Thống Thi Trắc Nghiệm</h1>
+        </div>
+        <div class="navbar-right">
+            <div class="user-info">
+                <div class="user-avatar"><%= username.charAt(0) %></div>
+                <div class="user-details">
+                    <div class="user-name"><%= fullname %></div>
+                    <div class="user-role">Giáo Viên</div>
+                </div>
+            </div>
+            <a href="<%= request.getContextPath() %>/logout" class="logout-btn">Đăng Xuất</a>
+        </div>
+    </div>
+
 <div class="container">
-    <h2>Tạo Cuộc Thi Mới</h2>
+    <div class="content-wrapper">
+    <h2>📝 Tạo Cuộc Thi Mới</h2>
     <% String error=(String) request.getAttribute("error"); String success=(String) request.getAttribute("success"); %>
     <% if (error != null) { %><div style="color:#c0392b"><%= error %></div><% } %>
     <% if (success != null) { %><div style="color:#27ae60"><%= success %></div><% } %>
 
-    <form method="POST" action="<%= request.getContextPath() %>/professor">
+    <form method="POST" action="<%= request.getContextPath() %>/professor" onsubmit="return validateForm()">
         <input type="hidden" name="action" value="create-test" />
 
         <div class="section">
@@ -90,8 +158,9 @@
             <button type="submit">Tạo Cuộc Thi</button>
         </div>
     </form>
-    <div >
-        <a href="professor-dashboard.jsp">← Quay lại Dashboard</a>
+    <div class="back-link">
+        <a href="<%= request.getContextPath() %>/professor-dashboard.jsp">← Quay lại Trang Chủ</a>
+    </div>
     </div>
 </div>
 

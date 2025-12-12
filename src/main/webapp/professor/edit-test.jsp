@@ -24,6 +24,62 @@
     <title>Sửa Cuộc Thi - Hệ Thống Thi Trắc Nghiệm</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/professor-common.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/edit-test.css">
+    <script>
+        // Set minimum datetime for start time (current datetime)
+        window.addEventListener('DOMContentLoaded', function() {
+            var now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            var minDateTime = now.toISOString().slice(0, 16);
+            
+            var startInput = document.querySelector('input[name="startTime"]');
+            var endInput = document.querySelector('input[name="endTime"]');
+            
+            startInput.min = minDateTime;
+            
+            // When start time changes, update end time minimum
+            startInput.addEventListener('change', function() {
+                endInput.min = this.value;
+                if (endInput.value && endInput.value <= this.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    endInput.value = '';
+                }
+            });
+            
+            // Validate end time
+            endInput.addEventListener('change', function() {
+                if (startInput.value && this.value <= startInput.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    this.value = '';
+                }
+            });
+        });
+        
+        function validateEditTestForm() {
+            var startTime = document.querySelector('input[name="startTime"]').value;
+            var endTime = document.querySelector('input[name="endTime"]').value;
+            var now = new Date();
+            
+            if (!startTime || !endTime) {
+                alert('Vui lòng nhập đầy đủ thời gian bắt đầu và kết thúc!');
+                return false;
+            }
+            
+            var start = new Date(startTime);
+            var end = new Date(endTime);
+            
+            if (start <= now) {
+                alert('Thời gian bắt đầu phải sau thời điểm hiện tại!');
+                return false;
+            }
+            
+            if (end <= start) {
+                alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                return false;
+            }
+            
+            return confirm('Lưu tất cả các thay đổi này vào cơ sở dữ liệu?');
+        }
+    </script>
 </head>
 
 <body>
@@ -63,7 +119,7 @@
                             </div>
                             <% } %>
 
-                                <form method="POST" action="<%= request.getContextPath() %>/professor" onsubmit="return confirm('Lưu tất cả các thay đổi này vào cơ sở dữ liệu?');">
+                                <form method="POST" action="<%= request.getContextPath() %>/professor" onsubmit="return validateEditTestForm();">
                                     <input type="hidden" name="action" value="edit-test" />
                                     <input type="hidden" name="id" value="<%= test.getId() %>" />
 

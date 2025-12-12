@@ -237,6 +237,21 @@ public class ProfessorController extends HttpServlet {
             Timestamp start = Timestamp.valueOf(startStr.replace('T', ' ') + ":00");
             Timestamp end = Timestamp.valueOf(endStr.replace('T', ' ') + ":00");
             int timeMinutes = Integer.parseInt(timeStr);
+            
+            // Validate: start time must be after current time
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            if (start.before(now) || start.equals(now)) {
+                request.setAttribute("error", "Thời gian bắt đầu phải sau thời điểm hiện tại");
+                handleCreateTestPage(request, response);
+                return;
+            }
+            
+            // Validate: end time must be after start time
+            if (end.before(start) || end.equals(start)) {
+                request.setAttribute("error", "Thời gian kết thúc phải sau thời gian bắt đầu");
+                handleCreateTestPage(request, response);
+                return;
+            }
 
             String[] termIds = request.getParameterValues("termIds");
             if (termIds == null || termIds.length == 0) {
@@ -513,6 +528,21 @@ public class ProfessorController extends HttpServlet {
             Timestamp start = Timestamp.valueOf(startStr.replace('T', ' ') + ":00");
             Timestamp end = Timestamp.valueOf(endStr.replace('T', ' ') + ":00");
             int timeMinutes = Integer.parseInt(timeStr);
+            
+            // Validate: start time must be after current time
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            if (start.before(now) || start.equals(now)) {
+                request.setAttribute("error", "Thời gian bắt đầu phải sau thời điểm hiện tại");
+                handleEditTestPage(request, response);
+                return;
+            }
+            
+            // Validate: end time must be after start time
+            if (end.before(start) || end.equals(start)) {
+                request.setAttribute("error", "Thời gian kết thúc phải sau thời gian bắt đầu");
+                handleEditTestPage(request, response);
+                return;
+            }
 
             TestBo testBo = new TestBo();
             boolean success = testBo.updateTest(testId, name, start, end, timeMinutes, professorId);

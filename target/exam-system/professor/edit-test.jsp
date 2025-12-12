@@ -22,424 +22,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sửa Cuộc Thi - Hệ Thống Thi Trắc Nghiệm</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar h1 {
-            color: #333;
-            font-size: 24px;
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #667eea;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .logout-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #c0392b;
-        }
-
-        .container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 40px 20px;
-        }
-
-        .content-wrapper {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-            width: 100%;
-            max-width: 1000px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 25px;
-            font-size: 24px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        input[type="text"],
-        input[type="datetime-local"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: border 0.3s;
-            font-family: inherit;
-        }
-
-        input[type="text"]:focus,
-        input[type="datetime-local"]:focus,
-        input[type="number"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
-        }
-
-        .alert {
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .alert-error {
-            background: #ffe5e5;
-            color: #c0392b;
-            border: 1px solid #e74c3c;
-        }
-
-        .alert-success {
-            background: #e5ffe5;
-            color: #27ae60;
-            border: 1px solid #2ecc71;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #95a5a6;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: #27ae60;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #229954;
-        }
-
-        .form-section {
-            background: #f9f9f9;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 4px solid #667eea;
-        }
-
-        .form-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .form-row.full {
-            grid-template-columns: 1fr;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 20px;
-            color: #999;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            margin-top: 10px;
-        }
-
-        .students-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .students-table thead {
-            background: #f0f0f0;
-        }
-
-        .students-table th,
-        .students-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .students-table th {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .students-table tbody tr:hover {
-            background: #fafafa;
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-remove {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-remove:hover {
-            background: #c0392b;
-        }
-
-        .btn-add {
-            background: #27ae60;
-            color: white;
-        }
-
-        .btn-add:hover {
-            background: #229954;
-        }
-
-        .add-student-section {
-            background: #f0f8ff;
-            border: 1px solid #bce4f7;
-            border-radius: 5px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        .add-student-section h4 {
-            color: #2196f3;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .add-row {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-        }
-
-        .add-row select {
-            flex: 1;
-        }
-
-        .add-row button {
-            flex: 0 0 auto;
-            padding: 10px 15px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .button-group button {
-            flex: 1;
-        }
-
-        .button-group a {
-            flex: 1;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .back-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #1565c0;
-        }
-
-        .term-edit-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 2fr;
-            gap: 10px;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .term-edit-row:last-child {
-            border-bottom: none;
-        }
-
-        @media (max-width: 600px) {
-            .content-wrapper {
-                padding: 20px;
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/professor-common.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/edit-test.css">
+    <script>
+        // Set minimum datetime for start time (current datetime)
+        window.addEventListener('DOMContentLoaded', function() {
+            var now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            var minDateTime = now.toISOString().slice(0, 16);
+            
+            var startInput = document.querySelector('input[name="startTime"]');
+            var endInput = document.querySelector('input[name="endTime"]');
+            
+            startInput.min = minDateTime;
+            
+            // When start time changes, update end time minimum
+            startInput.addEventListener('change', function() {
+                endInput.min = this.value;
+                if (endInput.value && endInput.value <= this.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    endInput.value = '';
+                }
+            });
+            
+            // Validate end time
+            endInput.addEventListener('change', function() {
+                if (startInput.value && this.value <= startInput.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    this.value = '';
+                }
+            });
+        });
+        
+        function validateEditTestForm() {
+            var startTime = document.querySelector('input[name="startTime"]').value;
+            var endTime = document.querySelector('input[name="endTime"]').value;
+            var now = new Date();
+            
+            if (!startTime || !endTime) {
+                alert('Vui lòng nhập đầy đủ thời gian bắt đầu và kết thúc!');
+                return false;
             }
-
-            .form-row {
-                grid-template-columns: 1fr;
+            
+            var start = new Date(startTime);
+            var end = new Date(endTime);
+            
+            if (start <= now) {
+                alert('Thời gian bắt đầu phải sau thời điểm hiện tại!');
+                return false;
             }
-
-            .button-group {
-                flex-direction: column;
+            
+            if (end <= start) {
+                alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                return false;
             }
-
-            .term-edit-row {
-                grid-template-columns: 1fr;
-            }
-
-            .students-table {
-                font-size: 12px;
-            }
-
-            .students-table th,
-            .students-table td {
-                padding: 8px;
-            }
-
-            .add-row {
-                flex-direction: column;
-            }
-
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
+            
+            return confirm('Lưu tất cả các thay đổi này vào cơ sở dữ liệu?');
         }
-    </style>
+    </script>
 </head>
 
 <body>
     <div class="navbar">
-        <h1>📚 Hệ Thống Thi Trắc Nghiệm</h1>
+        <div class="navbar-brand">
+            <div class="logo">📚</div>
+            <h1>Hệ Thống Thi Trắc Nghiệm</h1>
+        </div>
         <div class="navbar-right">
             <div class="user-info">
-                <div class="user-avatar">
-                    <%= username.charAt(0) %>
-                </div>
-                <div>
-                    <div style="font-weight: 600;">
-                        <%= fullname %>
-                    </div>
-                    <div style="font-size: 12px; opacity: 0.8;">Giáo Viên</div>
+                <div class="user-avatar"><%= username.charAt(0) %></div>
+                <div class="user-details">
+                    <div class="user-name"><%= fullname %></div>
+                    <div class="user-role">Giáo Viên</div>
                 </div>
             </div>
-            <a href="logout" class="logout-btn">Đăng Xuất</a>
+            <a href="<%= request.getContextPath() %>/logout" class="logout-btn">Đăng Xuất</a>
         </div>
     </div>
 
@@ -462,7 +119,7 @@
                             </div>
                             <% } %>
 
-                                <form method="POST" action="<%= request.getContextPath() %>/professor" onsubmit="return confirm('Lưu tất cả các thay đổi này vào cơ sở dữ liệu?');">
+                                <form method="POST" action="<%= request.getContextPath() %>/professor" onsubmit="return validateEditTestForm();">
                                     <input type="hidden" name="action" value="edit-test" />
                                     <input type="hidden" name="id" value="<%= test.getId() %>" />
 

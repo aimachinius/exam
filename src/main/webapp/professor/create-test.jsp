@@ -28,6 +28,61 @@
                 if (!v || cls.toLowerCase().indexOf(v) !== -1) r.style.display=''; else r.style.display='none';
             });
         }
+        
+        // Set minimum datetime for start time (current datetime)
+        window.addEventListener('DOMContentLoaded', function() {
+            var now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            var minDateTime = now.toISOString().slice(0, 16);
+            
+            var startInput = document.querySelector('input[name="startTime"]');
+            var endInput = document.querySelector('input[name="endTime"]');
+            
+            startInput.min = minDateTime;
+            
+            // When start time changes, update end time minimum
+            startInput.addEventListener('change', function() {
+                endInput.min = this.value;
+                if (endInput.value && endInput.value <= this.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    endInput.value = '';
+                }
+            });
+            
+            // Validate end time
+            endInput.addEventListener('change', function() {
+                if (startInput.value && this.value <= startInput.value) {
+                    alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                    this.value = '';
+                }
+            });
+        });
+        
+        function validateForm() {
+            var startTime = document.querySelector('input[name="startTime"]').value;
+            var endTime = document.querySelector('input[name="endTime"]').value;
+            var now = new Date();
+            
+            if (!startTime || !endTime) {
+                alert('Vui lòng nhập đầy đủ thời gian bắt đầu và kết thúc!');
+                return false;
+            }
+            
+            var start = new Date(startTime);
+            var end = new Date(endTime);
+            
+            if (start <= now) {
+                alert('Thời gian bắt đầu phải sau thời điểm hiện tại!');
+                return false;
+            }
+            
+            if (end <= start) {
+                alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                return false;
+            }
+            
+            return true;
+        }
     </script>
 </head>
 <body>
@@ -55,7 +110,7 @@
     <% if (error != null) { %><div style="color:#c0392b"><%= error %></div><% } %>
     <% if (success != null) { %><div style="color:#27ae60"><%= success %></div><% } %>
 
-    <form method="POST" action="<%= request.getContextPath() %>/professor">
+    <form method="POST" action="<%= request.getContextPath() %>/professor" onsubmit="return validateForm()">
         <input type="hidden" name="action" value="create-test" />
 
         <div class="section">

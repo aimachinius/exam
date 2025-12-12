@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Sinh Viên</title>
+    <title>Trang chủ</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/student-dashboard.css">
 </head>
 <body>
@@ -38,7 +38,6 @@
         <div class="content-wrapper">
             <div class="welcome-section">
                 <h2>Chào mừng, <%= fullname %>! 👋</h2>
-                <p>Đây là dashboard của bạn. Bạn có thể xem danh sách các cuộc thi sẵn sàng để tham gia và bắt đầu thi ngay. Chúc bạn làm bài tốt và đạt kết quả cao!</p>
                 <div class="info-box">
                     <span class="icon">💡</span>
                     <span>Mỗi sinh viên chỉ được thi 1 lần cho mỗi bài thi. Hãy chuẩn bị kỹ trước khi bắt đầu!</span>

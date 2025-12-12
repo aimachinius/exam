@@ -16,25 +16,25 @@
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <title>Thêm Câu Hỏi - Hệ Thống Thi Trắc Nghiệm</title>
+                        <link rel="stylesheet" href="<%= request.getContextPath() %>/css/professor-common.css">
                         <link rel="stylesheet" href="css/add-question.css">
                     </head>
 
                     <body>
                         <div class="navbar">
-                            <h1>📚 Hệ Thống Thi Trắc Nghiệm</h1>
+                            <div class="navbar-brand">
+                                <div class="logo">📚</div>
+                                <h1>Hệ Thống Thi Trắc Nghiệm</h1>
+                            </div>
                             <div class="navbar-right">
                                 <div class="user-info">
-                                    <div class="user-avatar">
-                                        <%= username.charAt(0) %>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight: 600;">
-                                            <%= fullname %>
-                                        </div>
-                                        <div style="font-size: 12px; opacity: 0.8;">Giáo Viên</div>
+                                    <div class="user-avatar"><%= username.charAt(0) %></div>
+                                    <div class="user-details">
+                                        <div class="user-name"><%= fullname %></div>
+                                        <div class="user-role">Giáo Viên</div>
                                     </div>
                                 </div>
-                                <a href="logout" class="logout-btn">Đăng Xuất</a>
+                                <a href="<%= request.getContextPath() %>/logout" class="logout-btn">Đăng Xuất</a>
                             </div>
                         </div>
 

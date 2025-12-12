@@ -8,50 +8,19 @@
 <head>
     <meta charset="utf-8" />
     <title>Thi: <%= test.getName() %></title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
-        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .navbar h1 { color: #333; font-size: 24px; }
-        .navbar-right { display: flex; align-items: center; gap: 20px; }
-        .timer { background: white; padding: 12px 20px; border-radius: 6px; text-align: center; font-weight: bold; color: #333; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .timer #timer { font-size: 28px; color: #e74c3c; font-family: monospace; }
-        .logout-btn { background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; text-decoration: none; transition: background 0.3s; }
-        .logout-btn:hover { background: #c0392b; }
-        .container { flex: 1; display: flex; justify-content: center; padding: 30px 20px; }
-        .content { background: white; border-radius: 10px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); padding: 40px; width: 100%; max-width: 900px; max-height: 85vh; overflow-y: auto; }
-        h2 { color: #333; margin-bottom: 25px; font-size: 26px; }
-        .info-box { background: #f0f8ff; border-left: 4px solid #2196f3; padding: 15px; border-radius: 4px; margin-bottom: 25px; font-size: 14px; color: #1565c0; }
-        .question { margin-bottom: 30px; padding: 20px; background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 8px; }
-        .question-header { margin-bottom: 15px; }
-        .question-header strong { color: #333; font-size: 15px; }
-        .question-content { color: #333; margin: 10px 0; font-size: 15px; line-height: 1.6; }
-        .options { margin-top: 15px; display: flex; flex-direction: column; gap: 8px; }
-        .option-label { display: flex; align-items: center; padding: 10px; background: white; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: all 0.3s; }
-        .option-label:hover { background: #f5f5f5; border-color: #667eea; }
-        .option-label input[type="radio"] { margin-right: 10px; cursor: pointer; }
-        .option-text { flex: 1; }
-        .option-label.selected { background: #e3f2fd; border-color: #667eea; }
-        .button-group { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; }
-        .btn { padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 600; transition: all 0.3s; text-decoration: none; display: inline-block; }
-        .btn-submit { background: #27ae60; color: white; flex: 1; }
-        .btn-submit:hover { background: #229954; transform: translateY(-2px); }
-        .btn-exit { background: #95a5a6; color: white; }
-        .btn-exit:hover { background: #7f8c8d; }
-        .disabled { opacity: 0.6; pointer-events: none; }
-        .message { padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; font-weight: 600; }
-        .message-error { background: #ffe5e5; color: #c0392b; border: 1px solid #e74c3c; }
-        .message-success { background: #e5ffe5; color: #27ae60; border: 1px solid #2ecc71; }
-    </style>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/take-test.css">
 </head>
 <body>
     <div class="navbar">
-        <h1>📚 Hệ Thống Thi Trắc Nghiệm</h1>
+        <div class="navbar-brand">
+            <div class="logo">📚</div>
+            <h1>Hệ Thống Thi Trắc Nghiệm</h1>
+        </div>
         <div class="navbar-right">
+            <a href="<%= request.getContextPath() %>/student-dashboard.jsp" class="home-btn">🏠 Trang chủ</a>
             <div class="timer">
                 ⏱️ Thời gian còn lại: <div id="timer">--:--</div>
             </div>
-            <!-- <a href="<%= request.getContextPath() %>/student?action=list" class="logout-btn">← Quay lại</a> -->
         </div>
     </div>
     

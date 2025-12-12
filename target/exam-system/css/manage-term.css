@@ -1,0 +1,78 @@
+/* Manage Term Specific Styles */
+.terms-list {
+    display: grid;
+    gap: 15px;
+}
+
+.term-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.term-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+}
+
+.term-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(30, 60, 114, 0.15);
+    border-color: #1e3c72;
+}
+
+.term-card:hover::before {
+    transform: scaleY(1);
+}
+
+.term-info {
+    flex: 1;
+}
+
+.term-name {
+    color: #1e3c72;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.term-id {
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.term-actions {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .term-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .term-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .term-actions .btn-small {
+        width: 100%;
+    }
+}
