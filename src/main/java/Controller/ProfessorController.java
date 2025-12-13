@@ -28,6 +28,9 @@ public class ProfessorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         // Check session - chỉ professor mới được vào
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("role") == null
@@ -67,6 +70,9 @@ public class ProfessorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         // Check session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("role") == null
@@ -237,7 +243,7 @@ public class ProfessorController extends HttpServlet {
             Timestamp start = Timestamp.valueOf(startStr.replace('T', ' ') + ":00");
             Timestamp end = Timestamp.valueOf(endStr.replace('T', ' ') + ":00");
             int timeMinutes = Integer.parseInt(timeStr);
-            
+
             // Validate: start time must be after current time
             Timestamp now = new Timestamp(System.currentTimeMillis());
             if (start.before(now) || start.equals(now)) {
@@ -245,7 +251,7 @@ public class ProfessorController extends HttpServlet {
                 handleCreateTestPage(request, response);
                 return;
             }
-            
+
             // Validate: end time must be after start time
             if (end.before(start) || end.equals(start)) {
                 request.setAttribute("error", "Thời gian kết thúc phải sau thời gian bắt đầu");
@@ -528,7 +534,7 @@ public class ProfessorController extends HttpServlet {
             Timestamp start = Timestamp.valueOf(startStr.replace('T', ' ') + ":00");
             Timestamp end = Timestamp.valueOf(endStr.replace('T', ' ') + ":00");
             int timeMinutes = Integer.parseInt(timeStr);
-            
+
             // Validate: start time must be after current time
             Timestamp now = new Timestamp(System.currentTimeMillis());
             if (start.before(now) || start.equals(now)) {
@@ -536,7 +542,7 @@ public class ProfessorController extends HttpServlet {
                 handleEditTestPage(request, response);
                 return;
             }
-            
+
             // Validate: end time must be after start time
             if (end.before(start) || end.equals(start)) {
                 request.setAttribute("error", "Thời gian kết thúc phải sau thời gian bắt đầu");
